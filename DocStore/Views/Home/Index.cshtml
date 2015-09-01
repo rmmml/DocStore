@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "DocStore";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <div id="control">
+        <h2>Управление: </h2>
+        <p><a href="/Home/New">Создать документ</a></p>
+        <p><a href="/Home/Index">Показать список всех документов</a></p>
+        <label for="Sort">Упорядочить по:</label>
+        <form id="Sort" action="/Home/Sort" method="post">
+            <select name="sort_by" required>
+                <option value="CreatedDate">дате создания</option>
+                <option value="Title">названию</option>
+                <option value="Author">имени автора</option>
+                <option value="Tags">тегу</option>
+            </select>
+            <br />
+            <input type="submit" name="Sort" value="Применить" />
+        </form>
+        <h2>Поиск:</h2>
+        <form action="/Home/Search" method="post">
+            <input type="text" name="to_find" required placeholder="Название или тег" />
+            <br />
+            <input type="submit" value="Найти" />
+        </form>
+    </div>
+    <div id="view">
+        <table>
+            <tr>
+                <td class="head"><p>Название</p></td>
+                <td class="head"><p>Автор</p></td>
+                <td class="head"><p>Дата создания</p></td>
+                <td class="head"><p>Теги</p></td>
+                <td class="head"></td>
+            </tr>
+            @foreach (var doc in ViewBag.Documents)
+            {
+                <tr>
+                    <td>@doc.Title</td>
+                    <td>@doc.Author</td>
+                    <td>@doc.CreatedDate</td>
+                    <td>@doc.Tags</td>
+                    <td><a class="open" href="@doc.Location"></a></td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
